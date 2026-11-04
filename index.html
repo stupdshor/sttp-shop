@@ -30,14 +30,22 @@
         }
 
         body {
-            background-color: #000; display: flex; justify-content: center; min-height: 100vh; overflow: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden;
         }
 
         .app-container {
-            width: 100%; max-width: 480px; background-color: var(--bg-color);
-            color: var(--text-color); padding-bottom: 90px; position: relative;
-            height: 100vh; overflow-y: auto; box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            scrollbar-width: none; transition: transform 0.3s ease;
+            width: 100%; 
+            max-width: 480px; 
+            margin: 0 auto; /* Центрирование */
+            background-color: var(--bg-color);
+            padding-bottom: 90px; 
+            position: relative;
+            height: 100vh; 
+            overflow-y: auto; 
+            scrollbar-width: none; 
         }
         .app-container::-webkit-scrollbar { display: none; }
 
@@ -76,11 +84,10 @@
         .banner h2 { font-size: 20px; font-weight: 800; }
         .banner p { font-size: 13px; margin-top: 6px; opacity: 0.9; }
 
-        /* Лента акций (Ручной скролл) */
+        /* Лента акций */
         .promo-scroll {
             display: flex; gap: 12px; padding: 0 16px 16px 16px;
             overflow-x: auto; scrollbar-width: none;
-            -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
         }
         .promo-scroll::-webkit-scrollbar { display: none; }
         
@@ -263,7 +270,6 @@
         .address-modal.active { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
         .address-modal h3 { margin-bottom: 16px; font-size: 18px; color: #ffffff; }
         
-        /* Скроллируемый список станций */
         .address-list {
             overflow-y: auto; flex-grow: 1; margin-bottom: 10px; padding-right: 5px;
             scrollbar-width: thin; scrollbar-color: #555 transparent;
@@ -397,7 +403,6 @@
             </div>
 
             <div class="section-title"><span>Акции</span></div>
-            <!-- Ручная лента без автопрокрутки -->
             <div class="promo-scroll" id="promoScroll">
                 <div class="promo-card" onclick="openAddressModal()">🎁 Скидка 15%</div>
                 <div class="promo-card">🔥 Новинки</div>
@@ -554,7 +559,8 @@
     <script>
         // 1. Инициализация Telegram
         const tg = window.Telegram.WebApp;
-        tg.expand(); tg.ready();
+        tg.expand(); 
+        tg.ready();
         const user = tg.initDataUnsafe?.user;
         if (user) {
             document.getElementById('userName').innerText = user.first_name;
@@ -586,7 +592,6 @@
 
         const brandsList = ['Annima', 'Monster', 'Hotspot', 'Voopoo', 'Siberia', 'Elf Bar'];
 
-        // ПОЛНЫЙ СПИСОК СТАНЦИЙ МИНСКОГО МЕТРО
         const metroStations = [
             "Малиновка", "Петровщина", "Михалово", "Грушевка", "Институт Культуры", "Площадь Ленина", 
             "Октябрьская", "Площадь Победы", "Площадь Якуба Коласа", "Академия Наук", "Парк Челюскинцев", 
@@ -618,7 +623,6 @@
             if (savedAddr) {
                 selectedAddress = savedAddr;
                 document.getElementById('addressBtn').innerHTML = `📍 ${savedAddr}`;
-                // Подсвечиваем выбранную станцию, если она есть
                 const items = document.querySelectorAll('.address-item');
                 items.forEach(item => {
                     if(item.innerText.includes(savedAddr)) {
@@ -668,7 +672,6 @@
             });
         }
 
-        // Отрисовка списка станций метро
         function renderMetroStations() {
             const list = document.getElementById('metroList');
             list.innerHTML = '';
